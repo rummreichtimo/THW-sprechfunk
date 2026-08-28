@@ -217,6 +217,7 @@ main{min-width:0;padding-top:36px}
   padding:20px;box-shadow:var(--shadow);position:relative;min-width:0;
 }
 .card.wide{grid-column:1/-1}
+.card{scroll-margin-top:118px}
 .card h3{font-size:1.24rem;margin-bottom:4px;padding-right:52px}
 .card h4{font-size:1.02rem;margin:18px 0 7px}
 .card p+p{margin-top:9px}
@@ -279,12 +280,13 @@ main{min-width:0;padding-top:36px}
 .must h5::before{content:"◉";color:var(--signal);font-size:13px}
 .must ol{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:mk}
 .must li{
-  counter-increment:mk;display:grid;grid-template-columns:20px 1fr;gap:9px;
+  counter-increment:mk;position:relative;padding-left:29px;
   font-size:14.4px;color:var(--ink);line-height:1.5;
 }
 .must li::before{
-  content:counter(mk);font:600 11px/19px "IBM Plex Mono",monospace;text-align:center;
-  background:var(--signal);color:var(--surface);border-radius:5px;height:19px;
+  content:counter(mk);position:absolute;left:0;top:2px;width:20px;height:19px;
+  font:600 11px/19px "IBM Plex Mono",monospace;text-align:center;
+  background:var(--signal);color:var(--surface);border-radius:5px;
 }
 :root[data-theme="dark"] .must li::before,
 :root:not([data-theme="light"]) .must li::before{color:#0B1118}
@@ -407,12 +409,24 @@ details>summary:hover{color:var(--signal)}
 }
 .searchbox::placeholder{color:var(--ink-3)}
 .noresult{font-size:13.5px;color:var(--ink-3);padding:12px 2px}
+/* the glossary reads better as stacked entries than as a two-column table on a phone */
+@media(max-width:620px){
+  #bwTable,#bwTable tbody,#bwTable tr,#bwTable td{display:block;width:auto}
+  #bwTable{min-width:0}
+  #bwTable thead{display:none}
+  #bwTable tr{border-bottom:1px solid var(--line);padding:11px 13px}
+  #bwTable tr:last-child{border-bottom:none}
+  #bwTable tr:hover{background:none}
+  #bwTable td{border:none;padding:0}
+  #bwTable td:first-child{margin-bottom:3px;color:var(--signal)}
+}
 
 .timeline{margin-top:14px;display:flex;flex-direction:column;gap:0}
 .tl{display:grid;grid-template-columns:92px 1fr;gap:14px;padding-bottom:16px;position:relative}
 .tl:last-child{padding-bottom:0}
 .tl .yr{font:600 13px/1.5 "IBM Plex Mono",monospace;color:var(--signal);text-align:right;white-space:nowrap}
-.tl .bd{border-left:2px solid var(--line);padding-left:16px;position:relative;font-size:14.4px;color:var(--ink-2)}
+.tl .bd{border-left:2px solid var(--line);padding-left:16px;position:relative;font-size:14.4px;color:var(--ink-2);min-width:0;overflow-wrap:break-word}
+@media(max-width:560px){.tl{grid-template-columns:72px 1fr;gap:10px}.tl .yr{font-size:12px}.tl .bd{padding-left:13px}}
 .tl:last-child .bd{border-left-color:transparent}
 .tl .bd::before{content:"";position:absolute;left:-6px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--signal);border:2px solid var(--paper)}
 .tl .bd b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
@@ -486,8 +500,8 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
 .optagrid .g[data-c="0"] .cell{opacity:.55}
 
 .proc{counter-reset:pc;list-style:none;margin:11px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
-.proc li{counter-increment:pc;display:grid;grid-template-columns:21px 1fr;gap:10px;font-size:14.3px;color:var(--ink-2);line-height:1.5}
-.proc li::before{content:counter(pc);font:600 10.5px/20px "IBM Plex Mono",monospace;text-align:center;background:var(--surface-2);border:1px solid var(--line-2);color:var(--ink-2);border-radius:6px;height:20px}
+.proc li{counter-increment:pc;position:relative;padding-left:31px;font-size:14.3px;color:var(--ink-2);line-height:1.5}
+.proc li::before{content:counter(pc);position:absolute;left:0;top:1px;width:21px;height:20px;font:600 10.5px/19px "IBM Plex Mono",monospace;text-align:center;background:var(--surface-2);border:1px solid var(--line-2);color:var(--ink-2);border-radius:6px}
 .proc li b{color:var(--ink)}
 
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px;border:1px solid rgba(0,0,0,.18)}
@@ -523,45 +537,159 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
 .mini ul{margin:6px 0 0;padding-left:17px;display:flex;flex-direction:column;gap:4px}
 </style>
 
-<!-- ================= MASTHEAD ================= -->
-<header class="masthead">
-  <div class="wrap mh-grid">
-    <div>
-      <p class="eyebrow">THW Grundausbildung · LA 9 Verhalten im Einsatz</p>
-      <h1>Sprechfunk&shy;kompass<span class="thin">Alle 10 Lernabschnitte „Sprechfunken“ in einer Lernübersicht</span></h1>
-      <p class="lede">Analogfunk, TETRA-Digitalfunk, Rufgruppen, Funkrufnamen und die komplette Betriebsabwicklung — didaktisch neu sortiert, mit Diagrammen, Vergleichstabellen und einer „Das musst du wissen“-Box je Thema. Der Stern-Filter oben blendet auf Wunsch nur das Prüfungsrelevante ein.</p>
-      <div class="srcnote">
-        <strong>Quellenbasis:</strong> ausschließlich die 10 bereitgestellten THW-Präsentationen (LA 01–10, zusammen 241 Folien) — Folientexte, Grafiken <em>und</em> Referentennotizen. Inhalte, die dort nur angerissen oder widersprüchlich sind, sind als <span class="pill">Unklar</span> gekennzeichnet. Es wurde nichts ergänzt oder erfunden.
+<style>
+/* ============ APP SHELL / VIEWS ============ */
+.view[hidden]{display:none!important}
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.tb-row{display:flex;align-items:center;gap:10px;max-width:var(--maxw);margin:0 auto;padding:9px 16px}
+.tb-back{
+  display:none;align-items:center;gap:7px;flex:none;
+  font:600 13px/1 "IBM Plex Sans",sans-serif;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);padding:8px 12px 8px 10px;border-radius:9px;cursor:pointer;
+}
+.tb-back:hover{border-color:var(--signal);color:var(--signal)}
+body[data-view]:not([data-view="start"]) .tb-back{display:inline-flex}
+.tb-brand{
+  display:flex;align-items:baseline;gap:9px;min-width:0;flex:1 1 auto;
+  background:none;border:none;padding:0;cursor:pointer;text-align:left;color:inherit;
+}
+.tb-brand b{font:700 15px/1.2 "Barlow Semi Condensed",sans-serif;letter-spacing:.01em;color:var(--ink);white-space:nowrap}
+.tb-brand span{
+  font:500 12px/1.3 "IBM Plex Sans",sans-serif;color:var(--ink-3);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;
+}
+body[data-view="start"] .tb-brand span{display:none}
+@media(max-width:560px){
+  body[data-view]:not([data-view="start"]) .tb-brand b{display:none}
+  .tb-brand span{font-size:13px;font-weight:600;color:var(--ink)}
+}
+.tb-filter{border-top:1px solid var(--line);background:color-mix(in srgb,var(--surface-2) 60%,transparent)}
+body[data-view="start"] .tb-filter{display:none}
+.tb-filter .rail-in{padding:7px 16px}
+
+/* ============ START PAGE ============ */
+.hero{padding:34px 0 6px}
+body[data-view="start"] main{padding-top:10px}
+@media(max-width:760px){.hero{padding:18px 0 4px}}
+.hero h1{font-size:clamp(2rem,6.4vw,3.4rem);letter-spacing:-.014em}
+.hero .thin{font-size:.44em;margin-top:.5em}
+.hero .lede{font-size:1rem;max-width:56ch}
+.statrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:22px}
+@media(min-width:660px){.statrow{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+.jump{display:grid;gap:10px;margin-top:26px}
+@media(min-width:620px){.jump{grid-template-columns:repeat(3,minmax(0,1fr))}}
+a.jumpcard{
+  display:flex;flex-direction:column;gap:5px;text-decoration:none;color:inherit;
+  border:1px solid var(--signal);background:var(--signal-soft);border-radius:12px;padding:14px 15px;transition:.16s;
+}
+a.jumpcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+a.jumpcard b{font:700 15.5px/1.2 "Barlow Semi Condensed",sans-serif;font-size:17px;color:var(--signal)}
+a.jumpcard span{font-size:12.8px;color:var(--ink-2);line-height:1.45}
+
+.grouphead{
+  display:flex;align-items:baseline;gap:11px;margin:34px 0 12px;
+}
+.grouphead h2{font-size:1.22rem;letter-spacing:.005em;flex:none}
+.grouphead i{flex:1 1 auto;height:1px;background:var(--line);display:block}
+.grouphead em{
+  font-style:normal;font:600 10.5px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);flex:none;
+}
+.tiles{display:grid;gap:11px}
+@media(min-width:560px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1180px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+a.tile{
+  display:block;text-decoration:none;color:inherit;position:relative;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:14px 15px;box-shadow:var(--shadow);transition:.16s;
+}
+a.tile:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--signal)}
+a.tile .row1{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+a.tile .no{
+  font:600 10.5px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;color:var(--signal);
+  border:1px solid color-mix(in srgb,var(--signal) 40%,transparent);background:var(--signal-soft);
+  padding:4px 7px;border-radius:6px;flex:none;
+}
+a.tile .stars{margin-left:auto;font-size:11px;color:var(--rel);letter-spacing:.04em;white-space:nowrap}
+a.tile h3{font-size:1.06rem;line-height:1.2;margin-bottom:5px;padding:0}
+a.tile p{font-size:13.2px;color:var(--ink-2);line-height:1.45}
+a.tile .tick{
+  position:absolute;right:13px;bottom:12px;width:18px;height:18px;border-radius:50%;
+  background:var(--fact);color:var(--surface);display:none;place-items:center;font-size:11px;font-weight:700;
+}
+a.tile.is-done{border-color:color-mix(in srgb,var(--fact) 45%,transparent)}
+a.tile.is-done .tick{display:grid}
+:root[data-theme="dark"] a.tile .tick,:root:not([data-theme="light"]) a.tile .tick{color:#0B1118}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) a.tile .tick{color:#fff}}
+
+.startprog{
+  margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:15px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.startprog .pw{flex:1 1 220px;min-width:0}
+.startprog p{font:600 10.5px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px}
+.startprog .progbar{height:8px}
+.startprog b{font:700 1.5rem/1 "Barlow Semi Condensed",sans-serif;color:var(--signal);flex:none}
+.startprog button{
+  font:500 12px/1 "IBM Plex Sans",sans-serif;background:none;border:none;color:var(--ink-3);
+  cursor:pointer;text-decoration:underline;padding:0;flex:none;
+}
+.startprog button:hover{color:var(--signal)}
+
+/* ============ MODULE FOOTER NAV ============ */
+.modnav{
+  display:flex;align-items:stretch;gap:10px;margin-top:26px;padding-top:20px;
+  border-top:1px solid var(--line);flex-wrap:wrap;
+}
+a.mn{
+  flex:1 1 145px;min-width:0;display:flex;flex-direction:column;gap:3px;text-decoration:none;
+  border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:11px 14px;
+  color:inherit;transition:.16s;
+}
+a.mn:hover{border-color:var(--signal);box-shadow:var(--shadow)}
+a.mn em{font-style:normal;font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+a.mn b{font:600 14px/1.3 "IBM Plex Sans",sans-serif;color:var(--ink)}
+a.mn.nx{text-align:right;align-items:flex-end}
+a.mn.hm{flex:0 1 auto;justify-content:center;align-items:center;background:var(--surface-2)}
+@media(max-width:520px){a.mn.hm{flex:1 1 100%}a.mn.hm em{display:none}}
+/* the source note belongs to the start page, not to every module view */
+body[data-view]:not([data-view="start"]) .foot{display:none}
+a.mn.hm b{color:var(--signal)}
+</style>
+
+<!-- ================= APP TOPBAR ================= -->
+<header class="topbar">
+  <div class="tb-row">
+    <button class="tb-back" id="backBtn" type="button">← Übersicht</button>
+    <button class="tb-brand" id="brandBtn" type="button" title="Zur Startseite">
+      <b>Sprechfunk-Kompass</b><span id="tbWhere">Startseite</span>
+    </button>
+    <button class="iconbtn" id="themeBtn" title="Hell / Dunkel umschalten" aria-label="Hell oder dunkel umschalten">◐</button>
+  </div>
+  <div class="tb-filter">
+    <div class="rail-in">
+      <span class="rail-lbl">Anzeigen</span>
+      <div class="chips" role="group" aria-label="Nach Wichtigkeit filtern">
+        <button class="chip" data-filter="all" aria-pressed="true">Alles</button>
+        <button class="chip" data-filter="23" aria-pressed="false">★★ und höher</button>
+        <button class="chip" data-filter="3" aria-pressed="false">★★★ nur Muss-Wissen</button>
       </div>
-    </div>
-    <div class="mh-stats">
-      <div class="stat"><b>11</b><span>Lernmodule</span></div>
-      <div class="stat"><b>241</b><span>Quellfolien</span></div>
-      <div class="stat"><b>1109</b><span>THW-Rufgruppen je Gerät</span></div>
-      <div class="stat"><b>810.3</b><span>PDV/DV — die Grundlage</span></div>
     </div>
   </div>
 </header>
 
-<!-- ================= CONTROL BAR ================= -->
-<nav class="railbar" aria-label="Filter und Schnellzugriff">
-  <div class="rail-in">
-    <span class="rail-lbl">Anzeigen</span>
-    <div class="chips" role="group" aria-label="Nach Wichtigkeit filtern">
-      <button class="chip" data-filter="all" aria-pressed="true">Alles</button>
-      <button class="chip" data-filter="23" aria-pressed="false">★★ und höher</button>
-      <button class="chip" data-filter="3" aria-pressed="false">★★★ nur Muss-Wissen</button>
-    </div>
-    <span class="spacer"></span>
-    <button class="iconbtn" id="themeBtn" title="Hell / Dunkel umschalten" aria-label="Hell oder dunkel umschalten">◐</button>
-  </div>
-</nav>
-
 <div class="shell">
   <!-- ================= SIDEBAR ================= -->
   <aside class="toc" aria-label="Inhaltsverzeichnis">
-    <h4>Module</h4>
+    <h4>Navigation</h4>
     <ol id="tocList">
+      <li><a href="#start"><i>⌂</i><span>Startseite</span></a></li>
       <li><a href="#m01"><i>01</i><span>Auftrag &amp; Recht</span></a></li>
       <li><a href="#m02"><i>02</i><span>Physik &amp; Ausbreitung</span></a></li>
       <li><a href="#m03"><i>03</i><span>Sicherheit</span></a></li>
@@ -575,37 +703,74 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
       <li><a href="#m11"><i>11</i><span>Nachrichten &amp; Unterlagen</span></a></li>
       <li><a href="#zus"><i>↗</i><span>Zusammenhänge</span></a></li>
       <li><a href="#fazit"><i>Σ</i><span>Gesamtzusammenfassung</span></a></li>
+      <li><a href="#check"><i>?</i><span>Prüfungs-Schnellcheck</span></a></li>
     </ol>
     <div class="progwrap">
       <p>Lernfortschritt</p>
-      <div class="progbar"><span id="progFill" style="width:0%"></span></div>
+      <div class="progbar"><span id="progFill2" style="width:0%"></span></div>
       <p class="progtxt"><span id="progTxt">0 von 11 Modulen</span></p>
-      <button id="progReset" type="button">zurücksetzen</button>
     </div>
   </aside>
 
   <main>
     <!-- ================= INHALTSÜBERSICHT ================= -->
-    <section class="sec" id="uebersicht">
-      <div class="sec-head">
-        <span class="sec-no">START</span>
-        <h2>Inhaltsübersicht</h2>
-        <p class="sub">Elf Module, thematisch neu sortiert — nicht in der Reihenfolge der Präsentationen, sondern so, wie der Stoff aufeinander aufbaut. Klick führt direkt zum Abschnitt.</p>
+    <section class="view" id="start">
+      <div class="hero">
+        <p class="eyebrow">THW Grundausbildung · LA 9 Verhalten im Einsatz</p>
+        <h1>Sprechfunk&shy;kompass<span class="thin">Alle 10 Lernabschnitte „Sprechfunken“ in einer Lernübersicht</span></h1>
+        <p class="lede">Wähle ein Thema — jedes öffnet sich als eigene Seite mit Erklärungen, Diagrammen und einer „Das musst du wissen“-Box am Ende.</p>
+        <div class="statrow">
+          <div class="stat"><b>11</b><span>Lernmodule</span></div>
+          <div class="stat"><b>241</b><span>Quellfolien</span></div>
+          <div class="stat"><b>22</b><span>Prüfungsfragen</span></div>
+          <div class="stat"><b>810.3</b><span>PDV/DV — die Grundlage</span></div>
+        </div>
       </div>
 
-      <div class="tocards">
-        <a class="toc-card" href="#m01"><span class="n">MODUL 01</span><h3>Auftrag &amp; Rechtsgrundlagen</h3><p>Was der/die Sprechfunker/-in leisten muss und welche Gesetze und Dienstvorschriften dahinterstehen.</p><p class="meta"><span class="pill la">LA 01</span> ★★★</p></a>
-        <a class="toc-card" href="#m02"><span class="n">MODUL 02</span><h3>Physik &amp; Wellenausbreitung</h3><p>Frequenz, Wellenlänge, Reichweite, Reflexion, Beugung, Funkschatten — und die Merkregeln gegen Störungen.</p><p class="meta"><span class="pill la">LA 02</span> ★★★</p></a>
-        <a class="toc-card" href="#m03"><span class="n">MODUL 03</span><h3>Sicherheit im Funkbetrieb</h3><p>Antennenaufbau, Freileitungen, Verhalten bei Gewitter — der Teil, der Leben schützt.</p><p class="meta"><span class="pill la">LA 02</span> ★★★</p></a>
-        <a class="toc-card" href="#m04"><span class="n">MODUL 04</span><h3>Analogfunk der BOS</h3><p>Kanäle, Ober-/Unterband, Verkehrsarten und die Geräte FuG 8b-1 und FuG 11b.</p><p class="meta"><span class="pill la">LA 03</span> ★★</p></a>
-        <a class="toc-card" href="#m05"><span class="n">MODUL 05</span><h3>TETRA-Digitalfunk: Grundlagen</h3><p>TMO und DMO, Leistungsmerkmale, NBHB THW und die TTB-THW.</p><p class="meta"><span class="pill la">LA 04</span> ★★★</p></a>
-        <a class="toc-card" href="#m06"><span class="n">MODUL 06</span><h3>Digitale Endgeräte</h3><p>HRT, MRT, MRT-K, FRT — Bedienung, Notruf, Totmannwarner, Repeater und Gateway.</p><p class="meta"><span class="pill la">LA 05</span> ★★★</p></a>
-        <a class="toc-card" href="#m07"><span class="n">MODUL 07</span><h3>Ortsfeste Landfunkstelle</h3><p>Die oLFS im Ortsverband: Bedienpult, 10″-Rack, Funktionsumfang und Bedienschritte.</p><p class="meta"><span class="pill la">LA 10</span> ★</p></a>
-        <a class="toc-card" href="#m08"><span class="n">MODUL 08</span><h3>Rufgruppen im Digital&shy;funk</h3><p>Namenssystematik, Gruppenrufzonen, TBZ-Gruppen und die DMO-Rufgruppen des THW.</p><p class="meta"><span class="pill la">LA 06</span> ★★★</p></a>
-        <a class="toc-card" href="#m09"><span class="n">MODUL 09</span><h3>Funkrufnamen der BOS</h3><p>Kennwörter der Organisationen und der Aufbau der Rufnamen im THW und auf kommunaler Ebene.</p><p class="meta"><span class="pill la">LA 08</span> ★★★</p></a>
-        <a class="toc-card" href="#m10"><span class="n">MODUL 10</span><h3>Betriebs- &amp; Verkehrs&shy;abwicklung</h3><p>Anruf, Antwort, Bestätigung, Sammelanruf, blinde Beförderung, Buchstabieren, Betriebsworte.</p><p class="meta"><span class="pill la">LA 07</span> ★★★</p></a>
-        <a class="toc-card" href="#m11"><span class="n">MODUL 11</span><h3>Nachrichten &amp; Betriebs&shy;unterlagen</h3><p>Nachrichtenarten, Vorrangstufen, Meldevordruck, Funkplan und Kommunikationsskizze.</p><p class="meta"><span class="pill la">LA 09</span> ★★★</p></a>
-        <a class="toc-card" href="#zus"><span class="n">ÜBERGREIFEND</span><h3>Zusammenhänge &amp; Fazit</h3><p>Wie die Module zusammenhängen — plus die kompakte Gesamtzusammenfassung des ganzen Stoffs.</p><p class="meta">Karte + Kurzfassung</p></a>
+      <div class="jump">
+        <a class="jumpcard" href="#check"><b>★ Wichtigste Fragen</b><span>22 typische Prüfungsfragen — erst selbst antworten, dann aufklappen.</span></a>
+        <a class="jumpcard" href="#fazit"><b>Σ Alles auf einer Seite</b><span>Die kompakte Gesamtzusammenfassung für den Abend davor.</span></a>
+        <a class="jumpcard" href="#zus"><b>↗ Zusammenhänge</b><span>Die Landkarte des Stoffs: Regelwerk → Technik → Betrieb.</span></a>
+      </div>
+
+      <div class="startprog">
+        <div class="pw">
+          <p>Dein Lernfortschritt</p>
+          <div class="progbar"><span id="progFill" style="width:0%"></span></div>
+        </div>
+        <b id="progBig">0 / 11</b>
+        <button id="progReset" type="button">zurücksetzen</button>
+      </div>
+
+      <div class="grouphead"><em>Block A</em><h2>Grundlagen</h2><i></i></div>
+      <div class="tiles">
+        <a class="tile" href="#m01" data-tile="01"><div class="row1"><span class="no">01</span><span class="stars">★★★</span></div><h3>Auftrag &amp; Rechtsgrundlagen</h3><p>Deine fünf Aufgaben, Grundgesetz, StGB, TDDDG und die vier Dienstvorschriften.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m02" data-tile="02"><div class="row1"><span class="no">02</span><span class="stars">★★★</span></div><h3>Physik &amp; Wellenausbreitung</h3><p>Frequenz und Wellenlänge, Reichweite, Reflexion, Beugung, Funkschatten, Störungen.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m03" data-tile="03"><div class="row1"><span class="no">03</span><span class="stars">★★★</span></div><h3>Sicherheit im Funkbetrieb</h3><p>Freileitungen, Schiebemast im Dunkeln, Verhalten bei Gewitter.</p><span class="tick">✓</span></a>
+      </div>
+
+      <div class="grouphead"><em>Block B</em><h2>Technik &amp; Geräte</h2><i></i></div>
+      <div class="tiles">
+        <a class="tile" href="#m04" data-tile="04"><div class="row1"><span class="no">04</span><span class="stars">★★</span></div><h3>Analogfunk der BOS</h3><p>Kanäle, Ober- und Unterband, Verkehrsarten, FuG 8b-1 und FuG 11b.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m05" data-tile="05"><div class="row1"><span class="no">05</span><span class="stars">★★★</span></div><h3>TETRA-Digitalfunk</h3><p>TMO und DMO, Leistungsmerkmale, NBHB THW und die TTB-THW.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m06" data-tile="06"><div class="row1"><span class="no">06</span><span class="stars">★★★</span></div><h3>Digitale Endgeräte</h3><p>HRT, MRT, FRT — Bedienung, Notruf, Totmannwarner, Repeater und Gateway.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m07" data-tile="07"><div class="row1"><span class="no">07</span><span class="stars">★</span></div><h3>Ortsfeste Landfunkstelle</h3><p>Die oLFS im Ortsverband: Bedienpult, 10″-Rack, Funktionsumfang.</p><span class="tick">✓</span></a>
+      </div>
+
+      <div class="grouphead"><em>Block C</em><h2>Organisation &amp; Betrieb</h2><i></i></div>
+      <div class="tiles">
+        <a class="tile" href="#m08" data-tile="08"><div class="row1"><span class="no">08</span><span class="stars">★★★</span></div><h3>Rufgruppen im Digitalfunk</h3><p>Namenssystematik, Gruppenrufzonen, TBZ-Gruppen und DMO-Rufgruppen.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m09" data-tile="09"><div class="row1"><span class="no">09</span><span class="stars">★★★</span></div><h3>Funkrufnamen der BOS</h3><p>Kennwörter der Organisationen und der Aufbau der Rufnamen im THW.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m10" data-tile="10"><div class="row1"><span class="no">10</span><span class="stars">★★★</span></div><h3>Betriebs- &amp; Verkehrsabwicklung</h3><p>Anruf, Antwort, Sammelanruf, blinde Beförderung, Buchstabieren, Betriebsworte.</p><span class="tick">✓</span></a>
+        <a class="tile" href="#m11" data-tile="11"><div class="row1"><span class="no">11</span><span class="stars">★★★</span></div><h3>Nachrichten &amp; Betriebsunterlagen</h3><p>Nachrichtenarten, Vorrangstufen, Meldevordruck, Funkplan, Kommunikationsskizze.</p><span class="tick">✓</span></a>
+      </div>
+
+      <div class="grouphead"><em>Block D</em><h2>Überblick &amp; Prüfung</h2><i></i></div>
+      <div class="tiles">
+        <a class="tile" href="#zus"><div class="row1"><span class="no">↗</span></div><h3>Zusammenhänge</h3><p>Wie die elf Module zusammenspielen — plus die vier Erkenntnisse, die alles verbinden.</p></a>
+        <a class="tile" href="#fazit"><div class="row1"><span class="no">Σ</span></div><h3>Gesamtzusammenfassung</h3><p>Der ganze Stoff kompakt auf einer Seite.</p></a>
+        <a class="tile" href="#check"><div class="row1"><span class="no">?</span></div><h3>Prüfungs-Schnellcheck</h3><p>22 Fragen mit aufklappbarer Antwort.</p></a>
+        <a class="tile" href="#bwCard"><div class="row1"><span class="no">A–Z</span></div><h3>Betriebsworte-Glossar</h3><p>Alle 16 Betriebsworte mit Bedeutung — durchsuchbar.</p></a>
       </div>
 
       <div class="legend" aria-label="Legende der Hervorhebungen">
@@ -616,10 +781,17 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         <span class="lg"><i style="background:var(--exa)"></i>Beispiel</span>
         <span class="lg">★★★ unbedingt wissen · ★★ wichtig · ★ ergänzend</span>
       </div>
+
+      <details style="margin-top:18px">
+        <summary>Woher die Inhalte stammen</summary>
+        <div class="dbody">
+          <p>Ausschließlich aus den zehn bereitgestellten THW-Präsentationen (LA 01–10, zusammen 241 Folien) — ausgewertet wurden Folientexte, die Inhalte der Folien-Grafiken <em>und</em> die Referentennotizen. Es wurde nichts ergänzt oder erfunden. Stellen, an denen die Unterlagen selbst unvollständig oder uneinheitlich sind, sind im Text als <span class="pill">Unklar</span> gekennzeichnet.</p>
+        </div>
+      </details>
     </section>
 
     <!-- ================= MODUL 01 ================= -->
-    <section class="sec" id="m01" data-mod="01">
+    <section class="view sec" id="m01" data-mod="01">
       <div class="sec-head">
         <span class="sec-no">MODUL 01</span>
         <h2>Auftrag &amp; Rechtsgrundlagen</h2>
@@ -747,10 +919,15 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="01" aria-pressed="false"><span class="bx"></span>Modul 01 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m02"><em>Weiter →</em><b>Physik &amp; Wellenausbreitung</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 02 ================= -->
-    <section class="sec" id="m02" data-mod="02">
+    <section class="view sec" id="m02" data-mod="02">
       <div class="sec-head">
         <span class="sec-no">MODUL 02</span>
         <h2>Physik &amp; Wellen&shy;ausbreitung</h2>
@@ -1018,10 +1195,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="02" aria-pressed="false"><span class="bx"></span>Modul 02 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m01"><em>← Zurück</em><b>Auftrag &amp; Rechtsgrundlagen</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m03"><em>Weiter →</em><b>Sicherheit im Funkbetrieb</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 03 ================= -->
-    <section class="sec" id="m03" data-mod="03">
+    <section class="view sec" id="m03" data-mod="03">
       <div class="sec-head">
         <span class="sec-no">MODUL 03</span>
         <h2>Sicherheit im Funkbetrieb</h2>
@@ -1089,10 +1272,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="03" aria-pressed="false"><span class="bx"></span>Modul 03 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m02"><em>← Zurück</em><b>Physik &amp; Wellenausbreitung</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m04"><em>Weiter →</em><b>Analogfunk der BOS</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 04 ================= -->
-    <section class="sec" id="m04" data-mod="04">
+    <section class="view sec" id="m04" data-mod="04">
       <div class="sec-head">
         <span class="sec-no">MODUL 04</span>
         <h2>Analogfunk der BOS</h2>
@@ -1246,10 +1435,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="04" aria-pressed="false"><span class="bx"></span>Modul 04 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m03"><em>← Zurück</em><b>Sicherheit im Funkbetrieb</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m05"><em>Weiter →</em><b>TETRA-Digitalfunk: Grundlagen</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 05 ================= -->
-    <section class="sec" id="m05" data-mod="05">
+    <section class="view sec" id="m05" data-mod="05">
       <div class="sec-head">
         <span class="sec-no">MODUL 05</span>
         <h2>TETRA-Digitalfunk: Grundlagen</h2>
@@ -1420,10 +1615,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="05" aria-pressed="false"><span class="bx"></span>Modul 05 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m04"><em>← Zurück</em><b>Analogfunk der BOS</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m06"><em>Weiter →</em><b>Digitale Endgeräte</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 06 ================= -->
-    <section class="sec" id="m06" data-mod="06">
+    <section class="view sec" id="m06" data-mod="06">
       <div class="sec-head">
         <span class="sec-no">MODUL 06</span>
         <h2>Digitale Endgeräte</h2>
@@ -1850,10 +2051,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="06" aria-pressed="false"><span class="bx"></span>Modul 06 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m05"><em>← Zurück</em><b>TETRA-Digitalfunk: Grundlagen</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m07"><em>Weiter →</em><b>Ortsfeste Landfunkstelle</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 07 ================= -->
-    <section class="sec" id="m07" data-mod="07">
+    <section class="view sec" id="m07" data-mod="07">
       <div class="sec-head">
         <span class="sec-no">MODUL 07</span>
         <h2>Ortsfeste Land&shy;funkstelle (oLFS)</h2>
@@ -2040,10 +2247,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="07" aria-pressed="false"><span class="bx"></span>Modul 07 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m06"><em>← Zurück</em><b>Digitale Endgeräte</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m08"><em>Weiter →</em><b>Rufgruppen im Digitalfunk</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 08 ================= -->
-    <section class="sec" id="m08" data-mod="08">
+    <section class="view sec" id="m08" data-mod="08">
       <div class="sec-head">
         <span class="sec-no">MODUL 08</span>
         <h2>Rufgruppen im Digital&shy;funk</h2>
@@ -2215,10 +2428,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="08" aria-pressed="false"><span class="bx"></span>Modul 08 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m07"><em>← Zurück</em><b>Ortsfeste Landfunkstelle</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m09"><em>Weiter →</em><b>Funkrufnamen der BOS</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 09 ================= -->
-    <section class="sec" id="m09" data-mod="09">
+    <section class="view sec" id="m09" data-mod="09">
       <div class="sec-head">
         <span class="sec-no">MODUL 09</span>
         <h2>Funkrufnamen der BOS</h2>
@@ -2370,10 +2589,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="09" aria-pressed="false"><span class="bx"></span>Modul 09 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m08"><em>← Zurück</em><b>Rufgruppen im Digitalfunk</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m10"><em>Weiter →</em><b>Betriebs- &amp; Verkehrsabwicklung</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 10 ================= -->
-    <section class="sec" id="m10" data-mod="10">
+    <section class="view sec" id="m10" data-mod="10">
       <div class="sec-head">
         <span class="sec-no">MODUL 10</span>
         <h2>Betriebs- &amp; Verkehrs&shy;abwicklung</h2>
@@ -2750,7 +2975,7 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
           </div>
         </div>
 
-        <div class="card wide" data-prio="3">
+        <div class="card wide" id="bwCard" data-prio="3">
           <span class="prio">★★★</span>
           <h3>Betriebsworte — Glossar zum Nachschlagen</h3>
           <p class="lead">Alle Betriebsworte aus der Wiederholungs-Übersicht. Tipp: einfach ins Suchfeld tippen.</p>
@@ -2796,10 +3021,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="10" aria-pressed="false"><span class="bx"></span>Modul 10 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m09"><em>← Zurück</em><b>Funkrufnamen der BOS</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#m11"><em>Weiter →</em><b>Nachrichten &amp; Betriebsunterlagen</b></a>
+      </nav>
     </section>
 
     <!-- ================= MODUL 11 ================= -->
-    <section class="sec" id="m11" data-mod="11">
+    <section class="view sec" id="m11" data-mod="11">
       <div class="sec-head">
         <span class="sec-no">MODUL 11</span>
         <h2>Nachrichten &amp; Betriebs&shy;unterlagen</h2>
@@ -3013,10 +3244,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </ol>
       </div>
       <button class="donebtn" data-done="11" aria-pressed="false"><span class="bx"></span>Modul 11 als gelernt markieren</button>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m10"><em>← Zurück</em><b>Betriebs- &amp; Verkehrsabwicklung</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#zus"><em>Weiter →</em><b>Zusammenhänge</b></a>
+      </nav>
     </section>
 
     <!-- ================= ZUSAMMENHÄNGE ================= -->
-    <section class="sec" id="zus">
+    <section class="view sec" id="zus">
       <div class="sec-head">
         <span class="sec-no">ÜBERGREIFEND</span>
         <h2>Zusammenhänge</h2>
@@ -3176,10 +3413,16 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
           </div>
         </div>
       </div>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#m11"><em>← Zurück</em><b>Nachrichten &amp; Betriebsunterlagen</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#fazit"><em>Weiter →</em><b>Gesamtzusammenfassung</b></a>
+      </nav>
     </section>
 
     <!-- ================= GESAMTZUSAMMENFASSUNG ================= -->
-    <section class="sec" id="fazit">
+    <section class="view sec" id="fazit">
       <div class="sec-head">
         <span class="sec-no">Σ</span>
         <h2>Gesamt&shy;zusammen&shy;fassung</h2>
@@ -3305,9 +3548,24 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
         </div>
       </div>
 
-      <div class="card wide" style="margin-top:16px">
-        <h3>Prüfungs-Schnellcheck</h3>
-        <p class="lead">Zahlen und Begriffe, die erfahrungsgemäß abgefragt werden. Erst selbst antworten, dann aufklappen.</p>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#zus"><em>← Zurück</em><b>Zusammenhänge</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+        <a class="mn nx" href="#check"><em>Weiter →</em><b>Prüfungs-Schnellcheck</b></a>
+      </nav>
+    </section>
+
+
+    <!-- ================= PRÜFUNGS-SCHNELLCHECK ================= -->
+    <section class="view sec" id="check">
+      <div class="sec-head">
+        <span class="sec-no">?</span>
+        <h2>Prüfungs-Schnellcheck</h2>
+        <p class="sub">22 Fragen quer durch alle Module. Erst selbst antworten, dann aufklappen.</p>
+      </div>
+      <div class="card wide">
+        <p class="lead">Zahlen und Begriffe, die erfahrungsgemäß abgefragt werden.</p>
         <div class="qbank">
           <details class="q"><summary>Wie schnell breiten sich elektromagnetische Wellen aus?</summary><div class="a">Mit <b>Lichtgeschwindigkeit</b> — ca. <b>300.000 km/s</b> (= 300.000.000 m/s).</div></details>
           <details class="q"><summary>Was passiert mit der Wellenlänge, wenn die Frequenz steigt?</summary><div class="a">Sie wird <b>kleiner</b>. Je höher die Frequenz, umso geringer die Wellenlänge (λ = c/f).</div></details>
@@ -3333,6 +3591,11 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
           <details class="q"><summary>Wie kündigst du im Übungsfunk eine echte Lage an?</summary><div class="a">Mit dem Stichwort <b>„Tatsache“</b> — sie hat Vorrang vor dem Übungsverkehr.</div></details>
         </div>
       </div>
+
+      <nav class="modnav" aria-label="Modulnavigation">
+        <a class="mn" href="#fazit"><em>← Zurück</em><b>Gesamtzusammenfassung</b></a>
+        <a class="mn hm" href="#start"><em>&nbsp;</em><b>⌂ Übersicht</b></a>
+      </nav>
     </section>
 
     <footer class="foot">
@@ -3377,11 +3640,12 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
       var show = mode === "all" || (mode === "23" && p !== "1") || (mode === "3" && p === "3");
       c.classList.toggle("dim", !show);
     });
-    sections.forEach(function(s){
-      var kids = s.querySelectorAll(".card[data-prio]");
+    sections.forEach(function(sec){
+      var kids = sec.querySelectorAll(".card[data-prio]");
       var visible = 0;
       Array.prototype.forEach.call(kids, function(k){ if(!k.classList.contains("dim")) visible++; });
-      s.classList.toggle("dim", kids.length > 0 && visible === 0);
+      var note = sec.querySelector(".emptynote");
+      if(note) note.hidden = !(kids.length > 0 && visible === 0);
     });
   }
   chips.forEach(function(ch){
@@ -3495,17 +3759,25 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
     }catch(e){ return {}; }
   }
   function saveDone(o){ try{ localStorage.setItem("thw-done", JSON.stringify(o)); }catch(e){} }
+  var fill2 = document.getElementById("progFill2");
+  var pbig  = document.getElementById("progBig");
   function paint(){
     var d = loadDone(), n = 0;
     doneBtns.forEach(function(b){
-      var on = !!d[b.getAttribute("data-done")];
+      var key = b.getAttribute("data-done");
+      var on = !!d[key];
       if(on) n++;
       b.setAttribute("aria-pressed", String(on));
-      var label = "Modul " + b.getAttribute("data-done");
+      var label = "Modul " + key;
       b.lastChild.nodeValue = on ? (label + " ist erledigt") : (label + " als gelernt markieren");
+      var tile = document.querySelector('.tile[data-tile="' + key + '"]');
+      if(tile) tile.classList.toggle("is-done", on);
     });
-    fill.style.width = (total ? Math.round(n / total * 100) : 0) + "%";
-    ptxt.textContent = n + " von " + total + " Modulen";
+    var pct = (total ? Math.round(n / total * 100) : 0) + "%";
+    if(fill)  fill.style.width  = pct;
+    if(fill2) fill2.style.width = pct;
+    if(ptxt)  ptxt.textContent  = n + " von " + total + " Modulen";
+    if(pbig)  pbig.textContent  = n + " / " + total;
   }
   doneBtns.forEach(function(b){
     b.addEventListener("click", function(){
@@ -3519,25 +3791,6 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
   });
   paint();
 
-  /* ---------- Scrollspy ---------- */
-  var links = Array.prototype.slice.call(document.querySelectorAll("#tocList a"));
-  var targets = links.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
-  if("IntersectionObserver" in window && targets.length){
-    var seen = {};
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ seen[en.target.id] = en.isIntersecting ? en.intersectionRatio : 0; });
-      var best = null, bestVal = 0;
-      targets.forEach(function(t){
-        var v = seen[t.id] || 0;
-        if(v > bestVal){ bestVal = v; best = t.id; }
-      });
-      links.forEach(function(a){
-        a.classList.toggle("on", best !== null && a.getAttribute("href") === "#" + best);
-      });
-    }, { rootMargin: "-70px 0px -55% 0px", threshold: [0, 0.05, 0.2, 0.5, 1] });
-    targets.forEach(function(t){ io.observe(t); });
-  }
-
   /* ---------- Back to top ---------- */
   var toTop = document.getElementById("toTop");
   toTop.addEventListener("click", function(){
@@ -3546,5 +3799,74 @@ a.toc-card .meta{margin-top:10px;font-size:11.5px;color:var(--ink-3);display:fle
   window.addEventListener("scroll", function(){
     toTop.classList.toggle("show", window.scrollY > 700);
   }, { passive: true });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var TITLES = {
+    start:"Startseite",
+    m01:"01 · Auftrag & Rechtsgrundlagen",
+    m02:"02 · Physik & Wellenausbreitung",
+    m03:"03 · Sicherheit im Funkbetrieb",
+    m04:"04 · Analogfunk der BOS",
+    m05:"05 · TETRA-Digitalfunk: Grundlagen",
+    m06:"06 · Digitale Endgeräte",
+    m07:"07 · Ortsfeste Landfunkstelle",
+    m08:"08 · Rufgruppen im Digitalfunk",
+    m09:"09 · Funkrufnamen der BOS",
+    m10:"10 · Betriebs- & Verkehrsabwicklung",
+    m11:"11 · Nachrichten & Betriebsunterlagen",
+    zus:"Zusammenhänge",
+    fazit:"Gesamtzusammenfassung",
+    check:"Prüfungs-Schnellcheck"
+  };
+  var views = Array.prototype.slice.call(document.querySelectorAll(".view"));
+  var ids = views.map(function(v){ return v.id; });
+  var where = document.getElementById("tbWhere");
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll("#tocList a"));
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function show(id, scrollTarget){
+    if(ids.indexOf(id) === -1) id = "start";
+    views.forEach(function(v){ v.hidden = (v.id !== id); });
+    document.body.setAttribute("data-view", id);
+    if(where) where.textContent = TITLES[id] || "";
+    tocLinks.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href") === "#" + id); });
+    // run after the browser's own fragment scroll so we always land where we mean to
+    requestAnimationFrame(function(){
+      if(scrollTarget){ scrollTarget.scrollIntoView({ behavior:"auto", block:"start" }); }
+      else { window.scrollTo(0, 0); }
+    });
+  }
+
+  function go(id, target){
+    var hash = "#" + id;
+    if(location.hash !== hash){
+      try{ history.pushState({ v:id }, "", hash); }catch(e){ location.hash = hash; }
+    }
+    show(id, target);
+  }
+
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var raw = a.getAttribute("href").slice(1);
+    if(!raw) return;
+    if(ids.indexOf(raw) !== -1){ e.preventDefault(); go(raw, null); return; }
+    var t = document.getElementById(raw);
+    if(!t) return;
+    var v = t.closest(".view");
+    if(v){ e.preventDefault(); go(v.id, t); }
+  });
+
+  var backBtn = document.getElementById("backBtn");
+  var brandBtn = document.getElementById("brandBtn");
+  if(backBtn)  backBtn.addEventListener("click", function(){ go("start", null); });
+  if(brandBtn) brandBtn.addEventListener("click", function(){ go("start", null); });
+
+  window.addEventListener("popstate", function(){ show((location.hash || "#start").slice(1), null); });
+  show((location.hash || "#start").slice(1), null);
 })();
 </script>
