@@ -1,4 +1,26 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Interaktive Lernübersicht zu allen 10 THW-Lernabschnitten „Sprechfunken“: Physik und Wellenausbreitung, Analogfunk, TETRA-Digitalfunk, Rufgruppen, Funkrufnamen, Betriebs- und Verkehrsabwicklung — mit Diagrammen, Vergleichstabellen und Prüfungs-Schnellcheck.">
+<meta name="author" content="Erstellt aus den Ausbildungsunterlagen der Bundesanstalt Technisches Hilfswerk">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141D27" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="THW Sprechfunk-Kompass">
+<meta property="og:description" content="Alle 10 Lernabschnitte „Sprechfunken“ in einer interaktiven Lernübersicht — 11 Module, Diagramme und 22 Prüfungsfragen.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%BB%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A4BA0'/%3E%3Ctext x='50' y='50' font-size='58' text-anchor='middle' dominant-baseline='central'%3E%F0%9F%93%BB%3C/text%3E%3C/svg%3E">
 <title>THW Sprechfunk-Kompass</title>
+<style>
+/* base reset — the Artifact runtime supplies these too, so they are harmless there */
+html{-webkit-text-size-adjust:100%}
+img,svg,video{max-width:100%}
+[hidden]{display:none!important}
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -662,6 +684,9 @@ a.mn.hm{flex:0 1 auto;justify-content:center;align-items:center;background:var(-
 body[data-view]:not([data-view="start"]) .foot{display:none}
 a.mn.hm b{color:var(--signal)}
 </style>
+
+</head>
+<body>
 
 <!-- ================= APP TOPBAR ================= -->
 <header class="topbar">
@@ -3834,11 +3859,14 @@ a.mn.hm b{color:var(--signal)}
     document.body.setAttribute("data-view", id);
     if(where) where.textContent = TITLES[id] || "";
     tocLinks.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href") === "#" + id); });
-    // run after the browser's own fragment scroll so we always land where we mean to
-    requestAnimationFrame(function(){
+    // a fragment navigation makes the browser scroll to the element itself, which would
+    // leave it under the sticky bar - so land the view after that has happened
+    var place = function(){
       if(scrollTarget){ scrollTarget.scrollIntoView({ behavior:"auto", block:"start" }); }
       else { window.scrollTo(0, 0); }
-    });
+    };
+    place();
+    requestAnimationFrame(function(){ requestAnimationFrame(place); });
   }
 
   function go(id, target){
@@ -3866,7 +3894,14 @@ a.mn.hm b{color:var(--signal)}
   if(backBtn)  backBtn.addEventListener("click", function(){ go("start", null); });
   if(brandBtn) brandBtn.addEventListener("click", function(){ go("start", null); });
 
-  window.addEventListener("popstate", function(){ show((location.hash || "#start").slice(1), null); });
-  show((location.hash || "#start").slice(1), null);
+  function fromHash(){ show((location.hash || "#start").slice(1), null); }
+  window.addEventListener("popstate", fromHash);
+  window.addEventListener("hashchange", fromHash);
+  try{ history.scrollRestoration = "manual"; }catch(e){}
+  fromHash();
+  window.addEventListener("load", function(){ if(!location.hash || location.hash === "#start") window.scrollTo(0, 0); });
 })();
 </script>
+
+</body>
+</html>
